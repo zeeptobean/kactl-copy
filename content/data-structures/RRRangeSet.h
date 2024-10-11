@@ -1,11 +1,9 @@
 /**
  * Author: ngthanhtrung23
- * Source: Based on https://suisen-cp.github.io/cp-library-cpp/library/datastructure/util/range_set.hpp
- * Description:	merge_adjacent_segment = true -> merge 2 consecutive segments,
- * e.g. [1, 10] and [11, 20] --> [1, 20]
- * Time: $O(log n)$
+ * Description:	MergeAdjSeg is true = merge 2 consecutive segments,
+ * e.g. [1, 10] and [11, 20] = [1, 20]
  */
-template<typename T, bool merge_adjacent_segment = true>
+template<typename T, bool MergeAdjSeg = true>
 struct RangeSet {
     T n_elements() const { return sz; }
     T n_ranges() const { return ranges.size(); }
@@ -70,14 +68,14 @@ struct RangeSet {
 
     // Find min x: x >= lower && x NOT in this set
     T minimum_excluded(T lower) const {
-        static_assert(merge_adjacent_segment);
+        static_assert(MergeAdjSeg);
         auto it = find_range(lower);
         return it == ranges.end() ? lower : it->second + 1;
     }
 
     // Find max x: x <= upper && x NOT in this set
     T maximum_excluded(T upper) const {
-        static_assert(merge_adjacent_segment);
+        static_assert(MergeAdjSeg);
         auto it = find_range(upper);
         return it == ranges.end() ? upper : it->first - 1;
     }
@@ -86,6 +84,6 @@ struct RangeSet {
     map<T, T> ranges;
 	
     bool is_mergeable(T cur_r, T next_l) {
-        return next_l <= cur_r + merge_adjacent_segment;
+        return next_l <= cur_r + MergeAdjSeg;
     }
 };

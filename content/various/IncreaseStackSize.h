@@ -1,4 +1,5 @@
 /**
+ * Author: atcoder ppl
  * Description: tang stack hack
  */
 void main_() {

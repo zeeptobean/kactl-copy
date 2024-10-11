@@ -1,4 +1,5 @@
 /**
+ * Author: ngthanhtrung23
  * Description: Matrix, which works for both double and int
  */
 

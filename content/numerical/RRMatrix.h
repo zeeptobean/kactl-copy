@@ -84,16 +84,12 @@ struct Matrix {
     template <typename T2, typename std::enable_if<std::is_floating_point<T2>::value>::type * = nullptr>
     static int choose_pivot(const Matrix<T2> &mtr, int h, int c) noexcept {
         int piv = -1;
-        for (int j = h; j < mtr.n_row; j++) {
-            if (mtr.get(j, c) and (piv < 0 or std::abs(mtr.get(j, c)) > std::abs(mtr.get(piv, c)))) piv = j;
-        }
+        for (int j = h; j < mtr.n_row; j++) if (mtr.get(j, c) and (piv < 0 or std::abs(mtr.get(j, c)) > std::abs(mtr.get(piv, c)))) piv = j;
         return piv;
     }
     template <typename T2, typename std::enable_if<!std::is_floating_point<T2>::value>::type * = nullptr>
     static int choose_pivot(const Matrix<T2> &mtr, int h, int c) noexcept {
-        for (int j = h; j < mtr.n_row; j++) {
-            if (mtr.get(j, c) != T(0)) return j;
-        }
+        for (int j = h; j < mtr.n_row; j++) if (mtr.get(j, c) != T(0)) return j;
         return -1;
     }
 
@@ -103,13 +99,11 @@ struct Matrix {
         Matrix mtr(*this);
         vector<int> ws;
         ws.reserve(n_col);
-
         for (int h = 0; h < n_row; h++) {
             if (c == n_col) break;
             int piv = choose_pivot(mtr, h, c);
             if (piv == -1) {
-                c++;
-                h--;
+                c++; h--;
                 continue;
             }
             if (h != piv) {
@@ -119,9 +113,7 @@ struct Matrix {
                 }
             }
             ws.clear();
-            for (int w = c; w < n_col; w++) {
-                if (mtr[h][w] != 0) ws.emplace_back(w);
-            }
+            for (int w = c; w < n_col; w++) if (mtr[h][w] != 0) ws.emplace_back(w);
             const T hcinv = T(1) / mtr[h][c];
             for (int hh = 0; hh < n_row; hh++) {
                 if (hh != h) {
@@ -138,9 +130,7 @@ struct Matrix {
     // For upper triangle matrix
     T det() const {
         T ret = 1;
-        for (int i = 0; i < n_row; i++) {
-            ret *= get(i, i);
-        }
+        for (int i = 0; i < n_row; i++) ret *= get(i, i);
         return ret;
     }
 
@@ -176,28 +166,19 @@ struct Matrix {
     }
 
     // sum of all elements in this matrix
-    T sum_all() {
-        return submatrix_sum(0, 0, n_row, n_col);
-    }
-
+    T sum_all() {return submatrix_sum(0, 0, n_row, n_col);}
     // sum of [r1, r2) x [c1, c2)
     T submatrix_sum(int r1, int c1, int r2, int c2) {
         T res {0};
-        for (int r = r1; r < r2; ++r) {
-            res += std::accumulate(
-                    x.begin() + r * n_col + c1,
-                    x.begin() + r * n_col + c2,
-                    T{0});
-        }
+        for (int r = r1; r < r2; ++r)
+            res += std::accumulate(x.begin() + r * n_col + c1, x.begin() + r * n_col + c2, T{0});
         return res;
     }
 };
 template<typename T>
 ostream& operator << (ostream& cout, const Matrix<T>& m) {
     cout << m.n_row << ' ' << m.n_col << endl;
-    for (int i = 0; i < m.n_row; ++i) {
-        cout << "row [" << i << "] = " << m.at(i) << endl;
-    }
+    for (int i = 0; i < m.n_row; ++i) cout << "row [" << i << "] = " << m.at(i) << endl;
     return cout;
 }
 // }}}

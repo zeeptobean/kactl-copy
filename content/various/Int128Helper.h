@@ -7,10 +7,8 @@ i128 str2i128(string str) {
     i128 ret = 0;
     bool minus = false;
     for (auto c : str) {
-        if (c == '-')
-            minus = true;
-        else
-            ret = ret * 10 + c - '0';
+        if (c == '-') minus = true;
+        else ret = ret * 10 + c - '0';
     }
     return minus ? -ret : ret;
 }
@@ -44,8 +42,7 @@ i128 gcd(i128 a, i128 b) {
     if (b == 0) return a;
     return gcd(b, a % b);
 }
-// Count trailing zeroes
-int ctz128(i128 n) {
+int ctz128(i128 n) {    // Count trailing zeroes
     if (!n) return 128;
     if (!static_cast<uint64_t>(n)) {
         return __builtin_ctzll(static_cast<uint64_t>(n >> 64)) + 64;

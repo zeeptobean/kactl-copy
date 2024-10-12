@@ -1,6 +1,6 @@
 /**
  * Author: vuhieu
- * Description: O(1) LCA & RMQ
+ * Description: O(1) LCA and RMQ
  * Time: O(1) query, O(n \log n) precompute
  */
 

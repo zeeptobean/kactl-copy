@@ -1,6 +1,6 @@
 /**
  * Author: ngthanhtrung23
- * Description: Finding bridges & articulation points
+ * Description: Finding bridges and articulation points
  * Assume already have undirected graph vector< vector<int> > G with V vertices
  * Vertex index from 0
  * Usage:

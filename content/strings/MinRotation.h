@@ -1,6 +1,5 @@
 #pragma once
-
-//Tinh vi tri cua xau xoay vong co thu tu tu dien nho nhat cua xau s
+//tinh vi tri cua xau xoay vong co thu tu tu dien nho nhat cua xau s
 int minRotation(string s) {
     int n = s.length();
     int x, y, i, j, u, v; // x is the smallest string before string y

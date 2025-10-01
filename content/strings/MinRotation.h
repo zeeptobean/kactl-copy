@@ -1,6 +1,6 @@
 #pragma once
 
-//Tính vị trí của xâu xoay vòng có thứ tự từ điển nhỏ nhất của xâu s
+//Tinh vi tri cua xau xoay vong co thu tu tu dien nho nhat cua xau s
 int minRotation(string s) {
     int n = s.length();
     int x, y, i, j, u, v; // x is the smallest string before string y

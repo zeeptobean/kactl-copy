@@ -1,7 +1,6 @@
 /**
  * Author: ngthanhtrung23
  * Description: Minimum number of operations to transform string a => string b
- * Time: idk
  */
 #pragma once
 

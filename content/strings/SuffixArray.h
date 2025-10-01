@@ -19,7 +19,7 @@
 
 struct SuffixArray {
 	vi sa, lcp;
-	SuffixArray(string& s, int lim=256) { // or basic_string<int>
+	SuffixArray(string& s, int lim=256) {
 		int n = sz(s) + 1, k = 0, a, b;
 		vi x(all(s)), y(n), ws(max(n, lim));
 		x.push_back(0), sa = lcp = y, iota(all(sa), 0);

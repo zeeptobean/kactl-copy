@@ -8,7 +8,7 @@
  */
 #pragma once
 
-array<vi, 2> manacher(const string& s) {
+array<vi, 2> manacher(string s) {
 	int n = sz(s);
 	array<vi,2> p = {vi(n+1), vi(n)};
 	rep(z,0,2) for (int i=0,l=0,r=0; i < n; i++) {

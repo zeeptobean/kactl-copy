@@ -2,16 +2,8 @@
 	
 \kactlimport{TernarySearch.h}
 \kactlimport{vuhieuComb.h}
-
-\section{Dynamic programming}
-	\kactlimport{LIS.h}
-	\kactlimport{EditDistance.h}
-	\kactlimport{FastKnapsack.h}
-	\kactlimport{UnboundKnapsack.h}
-	\kactlimport{BoundedKnapsack.h}
-	% \kactlimport{KnuthDP.h}
-	\kactlimport{DivideAndConquerDP.h}
-	\kactlimport{DPSOS.h}
+\kactlimport{BitmaskUtil.h}
+\kactlimport{SumOfSubset.h}
 
 \section{Debugging tricks}
 	\begin{itemize}
@@ -32,9 +24,9 @@
 		\end{itemize}
 	\subsection{Pragmas}
 		\begin{itemize}
-			\item \lstinline{#pragma GCC optimize ("Ofast")} will make GCC auto-vectorize loops and optimizes floating points better.
-			\item \lstinline{#pragma GCC target ("avx2")} can double performance of vectorized code, but causes crashes on old machines.
-			\item \lstinline{#pragma GCC optimize ("trapv")} kills the program on integer overflows (but is really slow).
+			\item \lstinline{#pragma GCC optimize ("Ofast")} go brrr
+			\item \lstinline{#pragma GCC target ("avx2")}
+			\item \lstinline{#pragma GCC optimize ("trapv")} kills the program on integer overflows
 		\end{itemize}
 	\kactlimport{FastMod.h}
 	\kactlimport{FastInput.h}
@@ -44,4 +36,4 @@
 	% \kactlimport{BumpAllocatorSTL.h}
 	% \kactlimport{Unrolling.h}
 	\kactlimport{IncreaseStackSize.h}
-	\kactlimport{SIMD.h}
+	% \kactlimport{SIMD.h}

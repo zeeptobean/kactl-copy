@@ -1,7 +1,3 @@
-/**
- * Author: vuhieu
- * Description: String hashing 2d for what?
- */
 struct Hashing2D {
 	vector<vector<int>> hs;
 	vector<int> PWX, PWY;

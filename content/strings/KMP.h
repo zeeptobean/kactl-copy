@@ -10,7 +10,7 @@
  */
 #pragma once
 
-vi pi(const string& s) {
+vi prefix_function(const string& s) {
 	vi p(sz(s));
 	rep(i,1,sz(s)) {
 		int g = p[i-1];
@@ -20,7 +20,8 @@ vi pi(const string& s) {
 	return p;
 }
 
-vi match(const string& s, const string& pat) {
+// Return all positions (0-based) that pattern `pat` appears in string `s`
+vi kmp(const string& s, const string& pat) {
 	vi p = pi(pat + '\0' + s), res;
 	rep(i,sz(p)-sz(s),sz(p))
 		if (p[i] == sz(pat)) res.push_back(i - 2 * sz(pat));

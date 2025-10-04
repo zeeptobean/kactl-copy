@@ -1,8 +1,42 @@
-/**
- * Author: gspvh
- * Description: Calculate combinatorial
- * prepare $O(n)$, query $O(n/ln(n))$, whatever modulo. 
- */
+//Cach 1: chuan bi n^2, truy van O(1), modulo bac ky
+#define MAX   5050
+int comb[MAX][MAX];
+
+for (int i = 0; i < MAX; i++) {
+	comb[0][i] = 1;
+	comb[i][0] = 0;
+}
+comb[0][0] = 1;
+
+for (int i = 1; i < MAX; i++) for (int j = 1; j < MAX; j++) {
+	if (i > j) comb[i][j] = 0;
+	if (i == j) comb[i][j] = 1;
+	if (i < j) {
+		comb[i][j] = comb[i][j - 1] + comb[i - 1][j - 1];
+		if (comb[i][j] >= MOD) comb[i][j] -= MOD;
+	}
+}
+
+//Cach 2: chuan bi O(n), truy van O(1), modulo nt lon
+#define MAX   1000100
+int frac[MAX], finv[MAX];
+
+frac[0] = 1;
+for (int i = 1; i < MAX; i++) frac[i] = 1LL * frac[i - 1] * i % MOD;
+finv[MAX - 1] = pw(frac[MAX - 1], MOD - 2);
+for (int i = MAX - 2; i >= 0; i--) finv[i] = 1LL * finv[i + 1] * (i + 1) % MOD;
+int comb(int k, int n) {
+	return k > n ? 0 : 1LL * frac[n] * finv[k] % MOD * finv[n - k] % MOD;
+}
+
+//Cach 3: chuan bi O(k), truy van O(k), modulo > k
+int comb(int k, long long n) {
+	int res = finv[k];
+	for (int i = 0; i < k; i++) res = 1LL * (n - i) % MOD * res % MOD;
+	return res;
+}
+
+//Cach 4: chuan bi O(n), query O(n/ln(n)), modulo bac ky. 
 #define MAX 1000100
 bool notPrime[MAX];
 vector<int> primes;

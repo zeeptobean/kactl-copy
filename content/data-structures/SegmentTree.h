@@ -1,31 +1,47 @@
-/**
- * Author: Lucian Bicsi
- * Date: 2017-10-31
- * License: CC0
- * Source: folklore
- * Description: Zero-indexed max-tree. Bounds are inclusive to the left and exclusive to the right.
- * Can be changed by modifying T, f and unit.
- * Time: O(\log N)
- * Status: stress-tested
- */
 #pragma once
-
-struct Tree {
-	typedef int T;
-	static constexpr T unit = INT_MIN;
-	T f(T a, T b) { return max(a, b); } // (any associative fn)
-	vector<T> s; int n;
-	Tree(int n = 0, T def = unit) : s(2*n, def), n(n) {}
-	void update(int pos, T val) {
-		for (s[pos += n] = val; pos /= 2;)
-			s[pos] = f(s[pos * 2], s[pos * 2 + 1]);
-	}
-	T query(int b, int e) { // query [b, e)
-		T ra = unit, rb = unit;
-		for (b += n, e += n; b < e; b /= 2, e /= 2) {
-			if (b % 2) ra = f(ra, s[b++]);
-			if (e % 2) rb = f(s[--e], rb);
-		}
-		return f(ra, rb);
-	}
+struct Node {
+    Node() {}
+};
+Node compare(const Node& a, const Node& b) {
+    Node res;
+    ...
+    return res;
+}
+struct SegTree {
+    int n; vector<Node> st;
+    SegTree(const int& _n = 0) {init(_n);}
+    void init(const int& _n = 0) {
+        n = _n;
+        st.assign(4 * n + 15, Node());
+    }
+    void push(int id, int l, int r) {
+        int mid = (l + r) >> 1;
+        int x = id << 1, y = x | 1;
+    }
+    void upd(int id, int l, int r, int i, int val) {
+        if (i < l || i > r) return;
+        if (l == r) return;
+        push(id, l, r);
+        int mid = (l + r) >> 1;
+        int x = id << 1, y = x | 1;
+        upd(x, l, mid, i, val);
+        upd(y, mid + 1, r, i, val);
+        st[id] = compare(st[x], st[y]);
+    }
+    Node get(int id, int l, int r, int u, int v) {
+        if (r < u || l > v) return Node();
+        if (u <= l && r <= v) return st[id];
+        push(id, l, r);
+        int mid = (l + r) >> 1;
+        int x = id << 1, y = x | 1;
+        Node L = get(x, l, mid, u, v);
+        Node R = get(y, mid + 1, r, u, v);
+        return compare(L, R);
+    }
+    void upd(int i, int val) {
+        upd(1, 1, n, i, val);
+    }
+    Node get(int l, int r) {
+        return get(1, 1, n, l, r);
+    }
 };

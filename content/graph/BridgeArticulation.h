@@ -35,24 +35,24 @@ struct UndirectedDfs {
             if (is_articulation[i]) articulation_points.push_back(i);
     }
 private:
-    void dfs(int u) {
-        low[u] = num[u] = counter++;
-        for (int v : g[u]) {
-            if (num[v] == -1) {
-                parent[v] = u;
-                if (u == root) children++;
-                dfs(v);
-                if (low[v] >= num[u])
-                    is_articulation[u] = true;
-                if (low[v] > num[u]) {
-                    if (cnt_edges[{u, v}] == 1) {
-                        bridges.push_back(make_pair(u, v));
-                    }
+void dfs(int u) {
+    low[u] = num[u] = counter++;
+    for (int v : g[u]) {
+        if (num[v] == -1) {
+            parent[v] = u;
+            if (u == root) children++;
+            dfs(v);
+            if (low[v] >= num[u])
+                is_articulation[u] = true;
+            if (low[v] > num[u]) {
+                if (cnt_edges[{u, v}] == 1) {
+                    bridges.push_back(make_pair(u, v));
                 }
-                low[u] = min(low[u], low[v]);
-            } else if (v != parent[u])
-                low[u] = min(low[u], num[v]);
-        }
+            }
+            low[u] = min(low[u], low[v]);
+        } else if (v != parent[u])
+            low[u] = min(low[u], num[v]);
     }
+}
 };
 // }}}

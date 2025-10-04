@@ -65,7 +65,7 @@ int comb(int k, int n) {
 // {
 //   "configurations": [{
 //       "name": "Win32",
-//       "includePath": ["${workspaceFolder}/**"],
+//       "includePath": ["${workspaceFolder}/*"],
 //       "defines": ["_DEBUG","UNICODE","_UNICODE","LOCAL_FREOPEN"],
 //       "cStandard": "gnu17",
 //       "cppStandard": "gnu++17",

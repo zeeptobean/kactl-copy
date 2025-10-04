@@ -1,53 +1,48 @@
-/**
- * Author: Simon Lindholm
- * Date: 2017-04-17
- * License: CC0
- * Source: folklore
- * Description: (tim khop cau) Finds all biconnected components in an undirected graph, and
- *  runs a callback for the edges in each. In a biconnected component there
- *  are at least two distinct paths between any two nodes. Note that a node can
- *  be in several components. An edge which is not in a component is a bridge,
- *  i.e., not part of any cycle.
- * Usage:
- *  int eid = 0; ed.resize(N);
- *  for each edge (a,b) {
- *    ed[a].emplace_back(b, eid);
- *    ed[b].emplace_back(a, eid++); }
- *  bicomps([\&](const vi\& edgelist) {...});
- * Time: O(E + V)
- * Status: tested during MIPT ICPC Workshop 2017
- */
 #pragma once
+// Input graph: vector< vector<int> > a, int n
+// Note: 0-indexed
+// Usage: BiconnectedComponent bc; (bc.components is the list of components)
+// This is biconnected components by edges (1 vertex can belong to
+// multiple components). For vertices biconnected component, remove
+// bridges and find components
+int n;
+vector<vector<int>> g;
+struct BiconnectedComponent {
+    vector<int> low, num, s;
+    vector< vector<int> > components;
+    int counter;
 
-vi num, st;
-vector<vector<pii>> ed;
-int Time;
-template<class F>
-int dfs(int at, int par, F& f) {
-	int me = num[at] = ++Time, top = me;
-	for (auto [y, e] : ed[at]) if (e != par) {
-		if (num[y]) {
-			top = min(top, num[y]);
-			if (num[y] < me)
-				st.push_back(e);
-		} else {
-			int si = sz(st);
-			int up = dfs(y, e, f);
-			top = min(top, up);
-			if (up == me) {
-				st.push_back(e);
-				f(vi(st.begin() + si, st.end()));
-				st.resize(si);
-			}
-			else if (up < me) st.push_back(e);
-			else { /* e is a bridge */ }
-		}
-	}
-	return top;
-}
+    BiconnectedComponent() : low(n, -1), num(n, -1), counter(0) {
+        for (int i = 0; i < n; i++)
+            if (num[i] < 0)
+                dfs(i, 1);
+    }
 
-template<class F>
-void bicomps(F f) {
-	num.assign(sz(ed), 0);
-	rep(i,0,sz(ed)) if (!num[i]) dfs(i, -1, f);
-}
+    void dfs(int x, int isRoot) {
+        low[x] = num[x] = ++counter;
+        if (g[x].empty()) {
+            components.push_back(vector<int>(1, x));
+            return;
+        }
+        s.push_back(x);
+
+        for (int i = 0; i < (int) g[x].size(); i++) {
+            int y = g[x][i];
+            if (num[y] > -1) low[x] = min(low[x], num[y]);
+            else {
+                dfs(y, 0);
+                low[x] = min(low[x], low[y]);
+
+                if (isRoot || low[y] >= num[x]) {
+                    components.push_back(vector<int>(1, x));
+                    while (1) {
+                        int u = s.back();
+                        s.pop_back();
+                        components.back().push_back(u);
+                        if (u == y) break;
+                    }
+                }
+            }
+        }
+    }
+};

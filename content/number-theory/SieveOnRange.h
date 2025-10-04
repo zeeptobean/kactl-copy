@@ -1,7 +1,6 @@
 /**
  * Author: vuhieu
  * Description: sieve on range
- * Time: ask vuhieu
  */
 #pragma once
 

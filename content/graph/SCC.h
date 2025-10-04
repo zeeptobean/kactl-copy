@@ -1,41 +1,50 @@
-/**
- * Author: Lukas Polacek
- * Date: 2009-10-28
- * License: CC0
- * Source: Czech graph algorithms book, by Demel. (Tarjan's algorithm)
- * Description: Finds strongly connected components in a
- * directed graph. If vertices $u, v$ belong to the same component,
- * we can reach $u$ from $v$ and vice versa.
- * Usage: scc(graph, [\&](vi\& v) { ... }) visits all components
- * in reverse topological order. comp[i] holds the component
- * index of a node (a component only has edges to components with
- * lower index). ncomps will contain the number of components.
- * Time: O(E + V)
- * Status: Bruteforce-tested for N <= 5
- */
 #pragma once
+// Index from 0
+// Usage:
+// DirectedDfs tree;
+// Now you can use tree.scc
+// Note: reverse(tree.scc) is topo sorted
+struct DirectedDfs {
+    vector<vector<int>> g;
+    int n;
+    vector<int> num, low, current, S;
+    int counter;
+    vector<int> comp_ids;
+    vector< vector<int> > scc;
 
-vi val, comp, z, cont;
-int Time, ncomps;
-template<class G, class F> int dfs(int j, G& g, F& f) {
-	int low = val[j] = ++Time, x; z.push_back(j);
-	for (auto e : g[j]) if (comp[e] < 0)
-		low = min(low, val[e] ?: dfs(e,g,f));
-
-	if (low == val[j]) {
-		do {
-			x = z.back(); z.pop_back();
-			comp[x] = ncomps;
-			cont.push_back(x);
-		} while (x != j);
-		f(cont); cont.clear();
-		ncomps++;
-	}
-	return val[j] = low;
-}
-template<class G, class F> void scc(G& g, F f) {
-	int n = sz(g);
-	val.assign(n, 0); comp.assign(n, -1);
-	Time = ncomps = 0;
-	rep(i,0,n) if (comp[i] < 0) dfs(i, g, f);
-}
+    DirectedDfs(const vector<vector<int>>& _g) : g(_g), n(g.size()),
+            num(n, -1), low(n, 0), current(n, 0), counter(0), comp_ids(n, -1) {
+        for (int i = 0; i < n; i++) if (num[i] == -1) dfs(i);
+    }
+    void dfs(int u) {
+        low[u] = num[u] = counter++;
+        S.push_back(u);
+        current[u] = 1;
+        for (auto v : g[u]) {
+            if (num[v] == -1) dfs(v);
+            if (current[v]) low[u] = min(low[u], low[v]);
+        }
+        if (low[u] == num[u]) {
+            scc.push_back(vector<int>());
+            while (1) {
+                int v = S.back(); S.pop_back(); current[v] = 0;
+                scc.back().push_back(v);
+                comp_ids[v] = ((int) scc.size()) - 1;
+                if (u == v) break;
+            }
+        }
+    }
+    // build DAG of strongly connected components
+    // Returns: adjacency list of DAG
+    std::vector<std::vector<int>> build_scc_dag() {
+        std::vector<std::vector<int>> dag(scc.size());
+        for (int u = 0; u < n; u++) {
+            int x = comp_ids[u];
+            for (int v : g[u]) {
+                int y = comp_ids[v];
+                if (x != y) dag[x].push_back(y);
+            }
+        }
+        return dag;
+    }
+};

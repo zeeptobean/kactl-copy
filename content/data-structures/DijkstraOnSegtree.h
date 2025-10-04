@@ -1,8 +1,4 @@
-/**
- * Author: vuhieu
- * Description: dijkstra on segtree wtf??
- */
-
+#pragma once
 const int N = 1e5 + 9;
 vector<pair<int, int>> g[N * 9];
 inline void add_edge(int u, int v, int w) {

@@ -5,11 +5,11 @@
 	\kactlimport{FloydWarshall.h}
 	\kactlimport{TopoSort.h}
 
-% \section{Network flow}
+\section{Network flow}
 	% \kactlimport{PushRelabel.h}
-	% \kactlimport{MinCostMaxFlow.h}
+	\kactlimport{MinCostMaxFlow.h}
 	% \kactlimport{EdmondsKarp.h}
-	% \kactlimport{Dinic.h}
+	\kactlimport{Dinic.h}
 	% \kactlimport{MinCut.h}
 	% \kactlimport{GlobalMinCut.h}
 	% \kactlimport{GomoryHu.h}
@@ -47,15 +47,13 @@
 	% \kactlimport{CompressTree.h}
 	% \kactlimport{LinkCutTree.h}
 
-% \section{Math}
-	% \subsection{Number of Spanning Trees}
-		% I.e. matrix-tree theorem.
-		% Source: https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem
-		% Test: stress-tests/graph/matrix-tree.cpp
-		% Create an $N\times N$ matrix \texttt{mat}, and for each edge $a \rightarrow b \in G$, do
-		% \texttt{mat[a][b]--, mat[b][b]++} (and \texttt{mat[b][a]--, mat[a][a]++} if $G$ is undirected).
-		% Remove the $i$th row and column and take the determinant; this yields the number of directed spanning trees rooted at $i$
-		% (if $G$ is undirected, remove any row/column).
+\section{Math}
+	\subsection{Number of Spanning Trees}
+		I.e. matrix-tree theorem.
+		Create an $N\times N$ matrix \texttt{mat}, and for each edge $a \rightarrow b \in G$, do
+		\texttt{mat[a][b]--, mat[b][b]++} (and \texttt{mat[b][a]--, mat[a][a]++} if $G$ is undirected).
+		Remove the $i$th row and column and take the determinant; this yields the number of directed spanning trees rooted at $i$
+		(if $G$ is undirected, remove any row/column).
 
 	% \subsection{Erdős–Gallai theorem}
 		% Source: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Gallai_theorem

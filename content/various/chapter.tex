@@ -6,13 +6,13 @@
 \kactlimport{SumOfSubset.h}
 \kactlimport{BigInt.h}
 
-\section{Debugging tricks}
-	\begin{itemize}
-		\item \verb@signal(SIGSEGV, [](int) { _Exit(0); });@ converts segfaults into Wrong Answers.
-			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
-			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
-		\item \verb@feenableexcept(29);@ kills the program on NaNs (\texttt 1), 0-divs (\texttt 4), infinities (\texttt 8) and denormals (\texttt{16}).
-	\end{itemize}
+% \section{Debugging tricks}
+% 	\begin{itemize}
+% 		\item \verb@signal(SIGSEGV, [](int) { _Exit(0); });@ converts segfaults into Wrong Answers.
+% 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
+% 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
+% 		\item \verb@feenableexcept(29);@ kills the program on NaNs (\texttt 1), 0-divs (\texttt 4), infinities (\texttt 8) and denormals (\texttt{16}).
+% 	\end{itemize}
 
 \section{Optimization tricks}
 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value).
@@ -38,7 +38,6 @@
 	% \kactlimport{Unrolling.h}
 	\kactlimport{IncreaseStackSize.h}
 	% \kactlimport{SIMD.h}
-
-	\kactlimport{c_cpp_properties.json}
-	\kactlimport{launch.json}
+	% \kactlimport{Setup.h}
+	'''
 	
